@@ -27,11 +27,11 @@ from telegram.ext import (
 )
 
 # ========= DUZGUNLEŞDIRME =========
-BOT_TOKEN = "8678757671:AAFdhtKxHJOWIxuUh8zTHZzzTGi5Q4Q9ypE"
+BOT_TOKEN = "8678757671:AAFQP4ufeu3zyk1Byt6zZOZdOXMWKN60pnY"
 ADMIN_ID = 7523674506
 API_URL = "https://crypto.happ.su/api.php"
 DB_PATH = "happvpn_bot.db"
-RENDER_URL = "https://kanal-bot-my5r.onrender.com"
+RENDER_URL = "https://vpn-bot-z9rj.onrender.com"
 # ===================================
 
 # -------------------- FLASK WEB SERWER --------------------
@@ -378,10 +378,23 @@ async def cmd_unban(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         await update.message.reply_text("Ulanyjy tabylmady ýa-da öňden banyndan aýrylyp bilner.")
 
-# -------------------- BOT RUNNER FOR THREAD --------------------
-def run_bot():
-    """Boty aýratyn thread içinde işletmek üçin asynkron däl ýörite funksiýa."""
+
+# -------------------- MAIN --------------------
+if __name__ == "__main__":
+    # 1. Veritabanını başlatalım
     _db_init()
+    
+    # 2. Arka plan self-ping thread'ini başlatıyoruz
+    threading.Thread(target=self_ping, daemon=True).start()
+    
+    # 3. Flask Sunucusunu arka plan (Thread) içinde başlatıyoruz
+    port = int(os.environ.get("PORT", 10000))
+    def run_flask():
+        flask_app.run(host="0.0.0.0", port=port, use_reloader=False)
+        
+    threading.Thread(target=run_flask, daemon=True).start()
+    
+    # 4. Telegram Botu ANA THREAD'de kurup ayağa kaldırıyoruz
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
@@ -392,16 +405,7 @@ def run_bot():
     app.add_handler(CommandHandler("unban", cmd_unban))
 
     print("🤖 Happ VPN bot işe başlady.")
+    
+    # Bot burada ana iş parçacığında kilitlenerek dinlemeye geçer (Çökmeyi önler)
     app.run_polling()
-
-# -------------------- MAIN --------------------
-if __name__ == "__main__":
-    # Self-ping mehanizmini arka planda (daemon) işletýäris
-    threading.Thread(target=self_ping, daemon=True).start()
     
-    # Telegram boty aýratyn thread-de işletýäris
-    threading.Thread(target=run_bot, daemon=True).start()
-    
-    # Esasy thread-de Flask web serwerini açýarys (Render-iň PORT-uny awtomatik alýar)
-    port = int(os.environ.get("PORT", 10000))
-    flask_app.run(host="0.0.0.0", port=port, use_reloader=False)
