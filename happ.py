@@ -27,7 +27,7 @@ from telegram.ext import (
 )
 
 # ========= DUZGUNLEŞDIRME =========
-BOT_TOKEN = "8678757671:AAEAnXgBv-of7BuAdKDG1eV7RD96kp3YZSw"
+BOT_TOKEN = "8678757671:AAFdhtKxHJOWIxuUh8zTHZzzTGi5Q4Q9ypE"
 ADMIN_ID = 7523674506
 API_URL = "https://crypto.happ.su/api.php"
 DB_PATH = "happvpn_bot.db"
