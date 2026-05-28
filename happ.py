@@ -31,7 +31,7 @@ BOT_TOKEN = "8678757671:AAEAnXgBv-of7BuAdKDG1eV7RD96kp3YZSw"
 ADMIN_ID = 7523674506
 API_URL = "https://crypto.happ.su/api.php"
 DB_PATH = "happvpn_bot.db"
-RENDER_URL = "https://vpn-bot-z9rj.onrender.com"
+RENDER_URL = "https://https://kanal-bot-1.onrender.com"
 # ===================================
 
 # -------------------- FLASK WEB SERWER --------------------
