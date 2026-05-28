@@ -1,0 +1,5 @@
+python-telegram-bot
+pymongo
+certifi
+requests
+Flask
