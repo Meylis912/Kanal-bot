@@ -56,7 +56,7 @@ ADMIN_IDS_RAW = os.environ.get("ADMIN_IDS", "7523674506,8407003010").strip()
 # <-- BU ÝERE (ýa-da Environment Variables-a) adminiň Telegram username-ini ýaz (@ belgisiz).
 # Ulanyjylar "VIP" düwmesine basanda, balans doldurmak üçin şu username bilen habarlaşmagy maslahat berler.
 ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "TIR_admin").strip().lstrip("@")
-RENDER_URL = os.environ.get("RENDER_URL", "https://tyrlar.onrender.com").strip()  # <-- Öz Render salgyňy ýaz. Mysal: https://seniň-botuň.onrender.com
+RENDER_URL = os.environ.get("RENDER_URL", "https://yuk-bot-sg6f.onrender.com").strip()  # <-- Öz Render salgyňy ýaz. Mysal: https://seniň-botuň.onrender.com
 PORT = int(os.environ.get("PORT", "10000"))
 
 missing = []
