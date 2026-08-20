@@ -57,7 +57,7 @@ DATABASE_NAME = os.environ.get("DATABASE_NAME", "Tyrlar").strip()
 ADMIN_IDS_RAW = os.environ.get("ADMIN_IDS", "7523674506,8407003010").strip()
 # RENDER_URL - botuň öz-özüne "uklamazlyk" üçin ping iberjek salgysy.
 # Render.com-da "Settings" bölüminden ýa-da şu ýere göni ýazyp bilersiň:
-RENDER_URL = os.environ.get("RENDER_URL", "").strip()  # <-- BU ÝERE (ýa-da Environment Variables-a) öz Render salgyňy ýaz. Mysal: https://seniň-botuň.onrender.com
+RENDER_URL = os.environ.get("RENDER_URL", "https://tyrlar.onrender.com").strip()  # <-- BU ÝERE (ýa-da Environment Variables-a) öz Render salgyňy ýaz. Mysal: https://seniň-botuň.onrender.com
 PORT = int(os.environ.get("PORT", "10000"))
 
 missing = []
