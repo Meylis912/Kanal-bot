@@ -26,7 +26,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 
 # Botuň sazlamalary
 BOT_TOKEN = os.getenv("BOT_TOKEN", "8702526230:AAGFXniyZS_ExepTh21Ec67v1zl25jiynQM")
-ADMIN_IDS = [int(x) for x in os.getenv("ADMIN_IDS", "8702526230 , 7523674506").split(",") if x.strip()]
+ADMIN_IDS = [int(x) for x in os.getenv("ADMIN_IDS", "8192709521, 7523674506").split(",") if x.strip()]
 
 # MongoDB
 MONGO_URL = os.getenv("MONGO_URL", "mongodb+srv://mergenowlyagulyyew41_db_user:ZvZhOKOAF6ZMRbHX@cluster1.l8z8gll.mongodb.net/?appName=Cluster1")
