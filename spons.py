@@ -1795,7 +1795,7 @@ from flask import Flask
 flask_app = Flask(__name__)
 
 # Kendi Render URL'inizi buraya yazın (self-ping için)
-RENDER_URL = ""
+RENDER_URL = "https://kanal-bot-pvu6.onrender.com"
 
 @flask_app.route("/")
 def home():
