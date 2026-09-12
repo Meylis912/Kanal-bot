@@ -1,6 +1,7 @@
-python-telegram-bot
-telebot
+aiogram 
+motor 
 pymongo
-certifi
-requests
-Flask
+httpx
+requests 
+httpx 
+Flask 
