@@ -32,7 +32,7 @@ ADMIN_IDS = [int(x) for x in os.getenv("ADMIN_IDS", "8192709521, 7523674506").sp
 MONGO_URL = os.getenv("MONGO_URL", "mongodb+srv://mergenowlyagulyyew41_db_user:ZvZhOKOAF6ZMRbHX@cluster1.l8z8gll.mongodb.net/?appName=Cluster1")
 
 # TGRASS
-TGRASS_API_KEY = os.getenv("TGRASS_API_KEY", "")
+TGRASS_API_KEY = os.getenv("TGRASS_API_KEY", "938f833f6dbf417db032a32f8eff00f4")
 TGRASS_API_URL = "https://tgrass.space/offers"
 
 # PIARFLOW
