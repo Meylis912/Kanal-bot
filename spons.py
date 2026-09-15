@@ -1,8 +1,11 @@
 import asyncio
 import logging
 import os
+import threading
 from datetime import datetime, timedelta
 
+import requests
+from flask import Flask
 from aiogram import Bot, Dispatcher, F, Router
 from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
@@ -18,9 +21,19 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 logging.basicConfig(level=logging.INFO)
 
-BOT_TOKEN = os.getenv("8897093028:AAFzSX6fMSI5N4nYb3Rbzo69FuMboTxVupk")
-MONGO_URI = os.getenv("mongodb+srv://mergenowlyagulyyew41_db_user:ZvZhOKOAF6ZMRbHX@cluster1.l8z8gll.mongodb.net/?appName=Cluster1")
+# Render'da Environment sekmesinden bu isimlerle env var eklersen onlar kullanılır,
+# eklemezsen aşağıdaki varsayılan değerlerle çalışır.
+BOT_TOKEN = os.getenv("BOT_TOKEN", "8897093028:AAFzSX6fMSI5N4nYb3Rbzo69FuMboTxVupk")
+MONGO_URI = os.getenv(
+    "MONGO_URI",
+    "mongodb+srv://mergenowlyagulyyew41_db_user:ZvZhOKOAF6ZMRbHX@cluster1.l8z8gll.mongodb.net/?appName=Cluster1",
+)
 SUPER_ADMIN_ID = int(os.getenv("SUPER_ADMIN_ID", "7523674506"))
+# Render Web Service uykuya dalmasın diye kendi kendine ping atacağı URL.
+# Render'da servisi oluşturduktan sonra sana verdiği adresi buraya yaz
+# (örn: https://kickbot.onrender.com) ya da RENDER_URL env var olarak ekle.
+RENDER_URL = os.getenv("RENDER_URL", "https://tgakanalxns.onrender.com")  # <-- BURAYA RENDER URL'İNİ YAZ
+PORT = int(os.getenv("PORT", "10000"))
 INACTIVE_DAYS = 6
 
 bot = Bot(BOT_TOKEN)
@@ -396,15 +409,47 @@ async def adm_del_finish(message: Message, state: FSMContext):
     await message.answer(f"✅ {uid} admin listesinden çıkarıldı.")
 
 
+# ---------- Render için Flask (Web Service portu açık kalsın diye) ----------
+
+flask_app = Flask(__name__)
+
+
+@flask_app.route("/")
+def health():
+    return "Bot çalışıyor ✅"
+
+
+def run_flask():
+    flask_app.run(host="0.0.0.0", port=PORT)
+
+
+async def self_ping_job():
+    # Render Web Service ücretsiz planda hareketsizlikte uykuya dalar,
+    # bu görev RENDER_URL'e periyodik istek atarak uyanık tutar.
+    if not RENDER_URL:
+        return
+    try:
+        requests.get(RENDER_URL, timeout=10)
+    except Exception as e:
+        logging.warning(f"Self-ping başarısız: {e}")
+
+
 # ---------- run ----------
 
 async def main():
+    threading.Thread(target=run_flask, daemon=True).start()
+
     scheduler.start()
+    if RENDER_URL:
+        scheduler.add_job(self_ping_job, "interval", minutes=10, id="self_ping", replace_existing=True)
+
     setting = await settings_col.find_one({"_id": "global"})
     if setting and setting.get("auto_onar"):
         scheduler.add_job(auto_repair_job, "interval", hours=24, id="auto_repair", replace_existing=True)
+
     await dp.start_polling(bot)
 
 
 if __name__ == "__main__":
     asyncio.run(main())
+    
