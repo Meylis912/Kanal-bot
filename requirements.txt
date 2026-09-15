@@ -1,3 +1,10 @@
+aiogram 
+motor 
+pymongo
+httpx
+requests 
+httpx 
+Flask 
 aiogram
 motor
 apscheduler
