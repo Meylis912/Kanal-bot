@@ -65,7 +65,7 @@ MONGO_URI = os.getenv("MONGO_URI") or "mongodb+srv://mergenowlyagulyyew41_db_use
 DB_NAME = os.getenv("DB_NAME", "media_cleaner")
 
 # Render URL'in: buraya yaz (Render zaten RENDER_EXTERNAL_URL verir, o varsa otomatik kullanılır)
-RENDER_URL = os.getenv("RENDER_EXTERNAL_URL") or "https://tgakanalxns.onrender.com"
+RENDER_URL = os.getenv("https://tgakanalxns.onrender.com") or "https://tgakanalxns.onrender.com"
 PING_INTERVAL = 300  # saniye (5 dakika)
 
 logging.basicConfig(
