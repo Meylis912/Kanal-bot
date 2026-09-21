@@ -1,4 +1,5 @@
 aiogram
 motor
+dnspython
 flask
 aiohttp
